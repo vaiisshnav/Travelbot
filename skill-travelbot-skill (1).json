@@ -1,0 +1,403 @@
+{
+  "intents": [
+    {
+      "intent": "flight",
+      "examples": [
+        {
+          "text": "yes, book a flight"
+        },
+        {
+          "text": "can you book a flight"
+        },
+        {
+          "text": "book a flight"
+        },
+        {
+          "text": "what are the flight timings"
+        },
+        {
+          "text": "yes"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "weather",
+      "examples": [
+        {
+          "text": "how is the weather"
+        },
+        {
+          "text": "how is the climate"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "trip",
+      "examples": [
+        {
+          "text": "one way"
+        },
+        {
+          "text": "round trip"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "restaurant",
+      "examples": [
+        {
+          "text": "can you book a restaurant"
+        },
+        {
+          "text": "where should i stay there"
+        },
+        {
+          "text": "book a restaurent"
+        },
+        {
+          "text": "i want to stay in a restaurant"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "welcome",
+      "examples": [
+        {
+          "text": "hiii"
+        },
+        {
+          "text": "hii"
+        },
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hola"
+        },
+        {
+          "text": "hi"
+        },
+        {
+          "text": "wass up"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "yeah",
+      "examples": [
+        {
+          "text": "yeah"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "go",
+      "examples": [
+        {
+          "text": "i want to go to"
+        },
+        {
+          "text": "i wish to go to"
+        },
+        {
+          "text": "i want to travel to"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "cityname",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "hyderabad",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "chennai",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "mumbai",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "america",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "london",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "delhi",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-time",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": [],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "webhooks": [
+    {
+      "url": "",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_5_1597231248929",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You can book a restarurant here   https://www.tripadvisor.in/Restaurants.How long do you stay?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#restaurant",
+      "dialog_node": "node_5_1597231248929",
+      "previous_sibling": "node_9_1597231568578"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "When are you going to return?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#trip",
+      "dialog_node": "node_1_1597416190027",
+      "previous_sibling": "node_10_1597418324255"
+    },
+    {
+      "type": "standard",
+      "title": "date",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "you can book a flight to here:    https://www.goibibo.com/flights/  or                                               https://www.yatra.com/flights . Do you want to book a restaurant also?If yes, please type \"yeah\" or else no."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@sys-date",
+      "dialog_node": "node_2_1597234816282",
+      "previous_sibling": "node_4_1597238246936"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "when do you want to leave @cityname"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#flight",
+      "dialog_node": "node_1_1597234095765",
+      "previous_sibling": "node_2_1597234816282"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "wow @cityname is a great place. Let me know your preferences.One way or round trip?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@cityname",
+      "dialog_node": "node_4_1597238246936",
+      "previous_sibling": "node_5_1597238576643"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Where are you going to travel?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#welcome",
+      "dialog_node": "node_9_1597231568578",
+      "previous_sibling": "node_1_1597234095765"
+    },
+    {
+      "type": "standard",
+      "title": "yeah",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "you can book a restaurant or room here       https://www.opentable.com/  or   https://www.tripadvisor.in/Restaurants"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#yeah",
+      "dialog_node": "node_5_1597238576643",
+      "previous_sibling": "node_1_1597416190027"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Weather is wonderful in @cityname. I Wish you a happy journey."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#weather && @cityname",
+      "dialog_node": "node_10_1597418324255",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, I can help you book flight , manage reservations, and answer questions."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "travelbot skill",
+  "language": "en",
+  "description": ""
+}
